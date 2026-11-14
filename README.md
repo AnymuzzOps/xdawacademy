@@ -113,3 +113,8 @@ Esta revisión solo modifica CSS de la Home; conserva HTML, contenidos, arquitec
 Comprobaciones: `npm run check`, `npm run build`, `node --check src/main.js` y `git diff --check`. Se revisaron visualmente encuadres aislados de las tres imágenes con cajas estimadas para **1440, 1024, 768, 430 y 375 px**, incluyendo comparativas antes/después del hero. Son simulaciones del recorte `cover`, no capturas de la página ni prueba de layout completo.
 
 La vista previa volvió a fallar con `relay could not open browser port 4173`; el estado fue `Sites preview stopped`. La revisión del formulario, sticky y layout completo en navegador sigue pendiente. Las proporciones reales de las cajas y la ausencia de overflow deben confirmarse en navegador antes del lanzamiento; no se afirma que esa revisión esté completada.
+
+
+## Sistema dimensional compartido
+
+La especificación actual de header, navegación, botones, tokens, auditoría y pruebas está en [docs/shared-dimensions.md](docs/shared-dimensions.md). Sustituye las dimensiones históricas descritas en entregas anteriores. Ejecutar `npm test` y `npm run build` para validar esta revisión.
