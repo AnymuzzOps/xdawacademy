@@ -93,3 +93,9 @@
  .home .contact .fields{gap:11px}
  .home .contact input,.home .contact select,.home .contact textarea{margin-top:5px}
 }
+
+/* Match the lower sections to the shared page container. */
+.home .community,.home .contact{width:var(--wrap);margin-inline:auto}
+/* The section now owns the wrapper: do not apply --wrap a second time inside it. */
+.home .contact>.wrap{width:100%;margin-inline:0}
+.home .community-copy,.home .contact-grid>*{min-width:0}
