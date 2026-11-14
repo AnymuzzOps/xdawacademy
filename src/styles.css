@@ -12,3 +12,84 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 
 .button:disabled{cursor:not-allowed;opacity:.6;transform:none}
+
+/* Fine layout corrections, scoped to the approved Home. */
+.home{--hero-photo-height:clamp(240px,70vw,310px)}
+/* The top gutter scrolls away; controls keep their full height without JS or reflow. */
+.home .site-header{top:-12px;padding-top:12px}
+.home .header-inner{height:72px}
+.home .method-copy{scroll-margin-top:0}
+.home .hero-media img{object-position:70% 8%}
+.home .methodology{padding-block:56px}
+.home .method-photo{align-self:center}
+.home .method-photo picture{height:auto;min-height:0;aspect-ratio:4/3}
+.home .method-photo img{object-position:50% 12%}
+.home .journey{padding-block:40px 32px}
+.home .upcoming{padding-block:40px 24px}
+.home .community-photo{min-height:440px}
+.home .community-photo img{object-position:50% 15%}
+.home .community-copy{padding-block:40px 36px}
+.home .origin{margin-top:28px;padding-top:22px}
+.home .contact{padding-block:32px}
+.home .contact-grid{align-items:start}
+.home .contact .kicker{margin-bottom:20px}
+.home .contact h2{margin-bottom:22px}
+.home .contact form{width:100%;max-width:580px;justify-self:end}
+.home .contact form>h3{margin-bottom:12px}
+.home .contact .fields{gap:12px 18px}
+.home .contact input,.home .contact select,.home .contact textarea{min-height:44px;margin-top:6px;padding:8px 12px}
+.home .contact textarea{min-height:60px}
+.home .contact .optional-fields{margin-top:8px}
+.home .contact .optional-fields .fields{padding-block:8px}
+.home .contact-submit{min-height:44px;margin-top:8px;padding:10px 16px}
+.home .form-notice{margin-top:9px}
+@media(min-width:1600px){.home .hero-media img{object-position:60% 6%}}
+@media(min-width:701px) and (max-width:1100px){
+ .home .hero-media img{object-position:76% 4%}
+ /* Keep all group faces in view instead of stretching a narrow frame to the copy height. */
+ .home .community{grid-template-columns:3fr 2fr}
+ .home .community-photo{min-height:0;aspect-ratio:3/2;align-self:center}
+ .home .community-photo img{object-position:50% 10%}
+ .home .community-copy{padding:30px 24px}
+ .home .community-copy h2{margin-bottom:22px}
+ .home .community-copy .origin>div{gap:15px;flex-wrap:wrap}
+}
+@media(max-width:900px){
+ .home .methodology{padding-block:40px}
+ .home .journey{padding-block:36px 28px}
+ .home .upcoming{padding-block:36px 24px}
+ .home .contact{padding-block:28px}
+}
+@media(max-width:700px){
+ .home .site-header{top:-8px;padding-top:8px}
+ .home .header-inner{height:60px}
+ .home .header-inner>nav{top:100%}
+ .home .hero-media img{object-position:78% 0%}
+ .home .community-photo{min-height:0;aspect-ratio:1.4}
+ .home .community-copy{padding:28px 32px}
+ .home .contact-grid{gap:24px}
+ .home .contact form{max-width:none}
+ .home .contact{padding-block:26px}
+ .home .contact h2{margin-bottom:18px}
+}
+@media(max-width:600px){
+ /* A wider photo frame protects both the lead instructor and the background faces. */
+ .home .hero-media{height:var(--hero-photo-height)}
+ .home .hero-media img{object-position:78% 0%}
+ .home .hero-shade{background:linear-gradient(180deg,transparent 0,#080c0d55 calc(var(--hero-photo-height) - 100px),var(--black) var(--hero-photo-height))}
+ .home .hero-content{padding-top:calc(var(--hero-photo-height) - 18px)}
+ .home .methodology{padding-block:28px 24px}
+ .home .method-photo img{object-position:50% 8%}
+ .home .journey{padding-block:28px}
+ .home .upcoming{padding-block:28px 24px}
+ .home .community-photo{aspect-ratio:1.4}
+ .home .community-photo img{object-position:50% 8%}
+ .home .community-copy{padding:28px 24px}
+ .home .origin{margin-top:22px;padding-top:18px}
+ .home .contact{padding-block:22px 24px}
+ .home .contact-grid{gap:22px}
+ .home .contact .kicker{margin-bottom:16px}
+ .home .contact h2{margin-bottom:14px}
+ .home .contact .fields{gap:11px}
+ .home .contact input,.home .contact select,.home .contact textarea{margin-top:5px}
+}
