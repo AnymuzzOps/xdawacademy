@@ -1,10 +1,45 @@
 # XDAW Academy
 
-Web estática independiente, en español, para `AnymuzzOps/xdawacademy`. HTML, CSS y JavaScript nativos, sin dependencias de ejecución ni archivos publicados de xdaw.cl.
+Web independiente en español para `AnymuzzOps/xdawacademy`, compatible con GitHub Pages bajo `/xdawacademy/` y con el futuro dominio `xdawacademy.cl`. HTML, CSS y JavaScript nativos, sin dependencias de ejecución.
 
-## Desarrollo y validación
+## Diseño implementado
 
-Requisitos: Node.js 22+ y Python 3 para la vista previa.
+La Home reproduce la composición de las dos capturas Desktop/Mobile facilitadas, sin usar las capturas como imágenes de fondo:
+
+- Header negro con logo tipográfico a la izquierda, navegación compacta y CTA cian en PC. Logo y menú desplegable en móvil.
+- Hero fotográfico completo, degradado oscuro a la izquierda, titular «TRANSFORMA MOVIMIENTO EN LIDERAZGO», tres líneas y acento cian. En móvil, foto arriba y contenido debajo, con ambos botones a todo el ancho.
+- Franja cian con tres mensajes en PC; mensaje «MUEVE. EXPRESA. LIDERA.» y flecha en móvil.
+- Metodología con tres pilares editoriales a la izquierda y foto a la derecha. En móvil: introducción, foto y pilares.
+- Recorrido sobre blanco cálido, cuatro etapas con conectores horizontales en PC y verticales en móvil.
+- Panel compacto de futuras formaciones, sin fechas, precios ni certificaciones anunciadas como disponibles.
+- Comunidad con foto grande a la izquierda y texto/origen de Klaudio Reies a la derecha; apilado intencional en móvil.
+- Contacto cian completo, titular a la izquierda y formulario a la derecha; campos en una columna en móvil.
+- Footer negro compacto.
+
+La tipografía condensada se aproxima visualmente con **Anton**, y el texto con **Inter**, ambas alojadas localmente. No se dispone del archivo fuente de Figma ni de sus tokens exactos: tamaños, colores, espaciados y recortes se derivan de las capturas. No se afirma una equivalencia pixel-perfect comprobada.
+
+### Fotografías e identidad
+
+No se recibieron las fotos originales separadas. Se incluyen tres escenas **ilustrativas generadas con IA**, no fotografías oficiales de XDAW. La procedencia está en `/legal/` y enlazada desde el footer. Ver `src/media/README.md` para tamaños y sustitución por fotos aprobadas.
+
+Los seis WebP suman aproximadamente 530 KB. `picture` selecciona versiones de móvil, las imágenes inferiores tienen carga diferida y dimensiones declaradas; el hero tiene prioridad alta. Todas usan `object-fit: cover` y focos responsivos. No se depende de URLs externas para fotos o fuentes. Las licencias de fuentes están en `src/fonts/`.
+
+El wordmark es tipográfico, no un archivo oficial de logo Academy. Reemplazar por el original aprobado si se facilita.
+
+## Funcionamiento y límites
+
+- Navegación accesible con skip link, foco visible, menú móvil con Escape y cierre al navegar.
+- Animaciones finitas de aparición con escalonado de 90 ms; el contenido permanece visible si fallan o no hay JavaScript. Se respetan los cambios de `prefers-reduced-motion`.
+- El formulario valida nombre, correo y ciudad. Conserva formación de interés, teléfono y mensaje; los dos opcionales están en un desplegable para respetar la composición compacta de la captura.
+- **No existe backend ni envío automático.** «Solicitar información» prepara un texto local para copiar y enviar al correo publicado `contacto@xdaw.cl`. Los mensajes distinguen preparación, copia y envío. No se guarda información en localStorage ni se hacen peticiones con los datos.
+- Sin JavaScript, el botón de preparación queda deshabilitado y se muestra la alternativa por correo.
+- No hay pagos, LMS, autenticación, emisión de certificados, estadísticas o testimonios inventados.
+
+Antes de recibir solicitudes reales: validar responsable, política de privacidad, tratamiento y retención; conectar un endpoint con validación de servidor y estados accesibles derivados de la respuesta real. Confirmar programa, condiciones y convocatorias antes de publicarlos.
+
+## Desarrollo y comprobaciones
+
+Requisitos: Node.js 22+ y Python 3 para el servidor de desarrollo.
 
 ```sh
 npm run dev
@@ -13,102 +48,53 @@ node --check src/main.js
 npm run build
 ```
 
-Abrir http://localhost:3000. El resultado publicable está en `dist/`. `check` verifica los enlaces locales de las cuatro páginas, anclas, IDs únicos, idioma y formato del archivo de convocatorias. No sustituye una auditoría visual o de accesibilidad con navegador.
+Abrir http://localhost:3000. El build se genera en `dist/` sin instalaciones ni servicios externos.
 
-## GitHub Pages
+`npm run check` verifica las cuatro páginas, anclas, idioma, IDs únicos, enlaces, `srcset`, assets CSS, fuentes locales, formato de convocatorias y ausencia de rutas absolutas que romperían el subdirectorio de GitHub Pages.
 
-1. Subir este commit a `main` de `AnymuzzOps/xdawacademy`.
-2. En Settings → Pages → Build and deployment elegir **GitHub Actions**.
-3. Ejecutar el workflow `Deploy GitHub Pages`, o hacer push a main. El workflow valida, compila y publica `dist/`.
-4. Comprobar `https://anymuzzops.github.io/xdawacademy/`, `/formacion/`, `/formaciones/` y `/legal/`.
+### Verificación de esta entrega
 
-Todos los enlaces internos y assets son relativos. El mismo build funciona en el subdirectorio del repositorio y en un dominio propio. No hace falta configurar un router ni reescrituras.
+Completados `npm run check`, `npm run build`, `node --check src/main.js` y `git diff --check`. Se inspeccionaron las tres imágenes generadas y se verificaron sus dimensiones/formato.
 
-### Dominio xdawacademy.cl
+Se revisaron estáticamente las reglas para **320, 375, 430, 768 y 1440 px**, incluyendo las anchuras de titulares con las métricas reales de Anton y los cambios de columnas, menú, imágenes y formulario. Esto no sustituye una revisión visual en navegador.
 
-Cuando el dominio y su administración estén confirmados:
-
-- Verificar el dominio en GitHub antes de asociarlo.
-- Añadir `xdawacademy.cl` en Settings → Pages → Custom domain.
-- Configurar los registros A del dominio raíz con los valores vigentes de la documentación oficial de GitHub Pages (actualmente 185.199.108.153, 185.199.109.153, 185.199.110.153 y 185.199.111.153). Confirmarlos antes de modificar DNS.
-- Para `www`, usar CNAME hacia `anymuzzops.github.io` y elegir el dominio canónico en GitHub.
-- Esperar la validación DNS y activar Enforce HTTPS.
-- Si se añade un archivo `CNAME` al proyecto, incluirlo también en la lista de copia de `scripts/build.mjs`.
-- Añadir canonical, og:url y sitemap con el dominio definitivo una vez activo. No están fijados prematuramente al dominio aún no verificado.
-
-No se modificó DNS ni se habilitó Pages desde esta implementación.
+**Limitación del entorno:** `sites-preview start` volvió a fallar con `relay could not open browser port 4173: timed out waiting for relay readiness`; `sites-preview status` indicó `Sites preview stopped`. No se pudo completar la comparación visual ni las pruebas de interacción en navegador en ninguno de esos anchos. Quedan pendientes antes de lanzamiento: comparación con capturas, overflow real, recortes, zoom al 200%, teclado, validación y copia al portapapeles. No se presenta esa verificación como completada.
 
 ## Estructura
 
-- `index.html`: Home y formulario.
-- `src/styles.css`: tokens y componentes responsivos.
-- `src/main.js`: menú accesible, reveals finitos y borrador de consulta.
-- `formacion/`: pilares conceptuales y estado del programa pendiente.
-- `formaciones/`: estado vacío de convocatorias.
-- `legal/`: funcionamiento actual y documentación legal pendiente.
-- `data/formaciones.json`: colección vacía para futuras convocatorias. Aún no se consume automáticamente: mantenerla vacía hasta definir y conectar su gestión.
-- `scripts/`: validación, compilación y servidor de desarrollo.
+- `index.html`: Home.
+- `src/styles.css`: componentes, layouts y responsive.
+- `src/main.js`: menú, reveals y consulta local.
+- `src/media/`: imágenes locales WebP y procedencia.
+- `src/fonts/`: fuentes locales y licencias OFL.
+- `formacion/`: seis pilares de la formación y programa pendiente. La Home los agrupa en tres ejes sin eliminar musicalidad, entrenamiento, liderazgo, comunidad ni desarrollo profesional.
+- `formaciones/`: convocatorias pendientes.
+- `legal/`: funcionamiento actual, privacidad pendiente y procedencia de imágenes.
+- `data/formaciones.json`: colección vacía reservada para gestión futura; aún no se consume automáticamente.
+- `scripts/`: validación, build y desarrollo.
 
-Para futuras convocatorias, definir campos `id`, `nombre`, `ciudad`, `modalidad`, `fecha`, `lugar`, `cupos`, `estado` y `urlInscripcion`; los opcionales deben omitirse si no están confirmados. Implementar su renderizado con escape de texto y validación de URLs al activar la gestión. No hay fixtures comerciales ni fechas ficticias.
+Se conservan las anclas `#inicio`, `#academia`, `#formacion`, `#metodologia`, `#fechas` y `#contacto`; se añade `#comunidad`. Las páginas secundarias conservan sus rutas y comparten el header/footer.
 
-## Formulario y contacto
+Para gestionar convocatorias en el futuro, definir y validar `id`, `nombre`, `ciudad`, `modalidad`, `fecha`, `lugar`, `cupos`, `estado` y `urlInscripcion`. No añadir registros sin datos confirmados. Validar texto y URLs al implementar su renderizado.
 
-No hay backend, almacenamiento, analítica, pagos, autenticación ni LMS. La validación usa campos HTML nativos. El botón prepara texto local, permite copiarlo y comunica explícitamente que **no fue enviado**. El correo `contacto@xdaw.cl` está publicado en el HTML de referencia; no se afirma que sea un buzón exclusivo de Academy.
+## GitHub Pages
 
-Antes de habilitar recepción: definir responsable, política de privacidad, consentimiento/base de tratamiento y retención; conectar un endpoint real, implementar validación del servidor y estados accesibles de envío, error y éxito según la respuesta real. Nunca convertir la preparación local en un supuesto envío exitoso.
+1. Subir o fusionar el commit en `main` de `AnymuzzOps/xdawacademy`.
+2. En Settings → Pages → Build and deployment elegir **GitHub Actions**.
+3. El workflow existente valida, compila y publica `dist/` en cada push a main; también permite ejecución manual.
+4. Comprobar `https://anymuzzops.github.io/xdawacademy/` y las rutas `formacion/`, `formaciones/`, `legal/`.
 
-## Sistema visual y referencia inspeccionada
+No hay router SPA ni reescrituras; todos los enlaces y assets son relativos y funcionan bajo el subdirectorio del repositorio. El workflow no se modifica en esta revisión.
 
-Se inspeccionaron mediante la conexión de GitHub `index.html`, `src/styles.css` y `src/main.js` de AnymuzzOps/xdaw, rama main, el 14 de noviembre de 2026. El clon por terminal falló por restricción de red; la inspección del código sí se completó mediante el conector. No se hizo una comparación visual de la web de referencia en navegador.
+### Futuro dominio xdawacademy.cl
 
-Reutilizados como principios y patrones (reimplementados, sin importar componentes):
+Cuando el dominio esté confirmado:
 
-- Barlow Condensed para títulos, Inter para texto.
-- Tokens originales: negro #090909, carbón #191919, blanco #f7f6f3, cian #00d8ec, naranja #ff7200 y magenta #ff2079.
-- Contenedor máximo de 1120 px, líneas finas, contraste, botones cápsula, foco cian y navegación compacta.
-- Recorrido editorial conectado y animaciones discretas con reduced-motion.
+- Verificar su propiedad en GitHub y añadirlo en Settings → Pages → Custom domain.
+- Configurar los registros A del dominio raíz según la documentación vigente de GitHub Pages (confirmar valores antes de tocar DNS).
+- Para `www`, usar CNAME hacia `anymuzzops.github.io` y elegir el dominio canónico.
+- Esperar validación DNS y activar Enforce HTTPS.
+- Si se incorpora `CNAME` al código, añadirlo a la lista de copia de `scripts/build.mjs`.
+- Añadir canonical, og:url y sitemap con el dominio definitivo cuando esté activo.
 
-Desarrollados para Academy:
-
-- Hero tipográfico centrado, cian dominante y recurso X abstracto, sin replicar la Home principal.
-- Seis pilares editoriales, separación «Vive / Enseña», camino conceptual y ámbitos profesionales.
-- Arquitectura de convocatorias, estado vacío, rutas propias y formulario honesto sin integración.
-- Composiciones diferentes para móvil: recorrido vertical, pilares compactos en dos columnas, comunidad editorial y formulario en dos columnas compactas.
-
-El identificador tipográfico XDAW Academy es provisional; no se presenta como un archivo oficial de logo. Sustituirlo por el arte aprobado cuando exista. No se han utilizado fotos sintéticas como si fueran registros reales, ni capturas de Instagram. Los dos slots fotográficos son composiciones abstractas identificadas como pendientes; el hero dispone de `.hero-art` para sustituir por foto/video auténtico conservando contraste y reduced-motion. Las fotos de formación y del creador están pendientes.
-
-## Pendientes editoriales
-
-Validar programa, horas, valores, requisitos y condiciones de certificación; convocatorias reales; fotografías autorizadas; logo Academy; redes; privacidad y condiciones. Las rutas muestran estos límites claramente. No se incorporaron testimonios, estadísticas ni promesas de empleo.
-
-## Verificación de esta entrega
-
-Pasaron comprobaciones estáticas de navegación y compilación. La infraestructura de preview falló con `relay could not open browser port 4173`; por ello no se verificó visualmente desktop/tablet/móvil ni se completó una auditoría de teclado con navegador. Antes de lanzamiento revisar 360/390/768/1280 px, zoom 200%, tabulación, menú (Escape), validación, copia, reduced-motion y disponibilidad de Google Fonts. No hay éxito de despliegue afirmado sin una ejecución real de Pages.
-
-
-## Compactación de la Home
-
-La Home se organiza en seis zonas: hero; formación; camino del instructor; próximas formaciones; comunidad y origen; contacto. La navegación y sus anclas se conservan (`#academia` ahora está dentro de formación), al igual que las rutas independientes.
-
-- Se agruparon la presentación de Academy y los seis pilares. Se resumió cada pilar sin eliminar ninguno y se mantuvo el enlace a la formación detallada y a las clases de XDAW.
-- El recorrido conserva sus cuatro etapas conceptuales e integra los seis ámbitos profesionales en una franja breve.
-- Comunidad y origen comparten una composición. Se eliminó el bloque tipográfico anterior y la franja decorativa de conceptos repetidos.
-- El CTA final se integró en el encabezado de contacto. Los accesos de conversión dicen «Solicita información»; el botón del formulario sigue diciendo «Preparar consulta» porque no hay envío real.
-- Las convocatorias siguen sin fechas ni ciudades inventadas. El acento cian del bloque y el enlace a contacto le dan mayor protagonismo.
-
-El texto principal pasó de 525 a 367 palabras: **30,1% menos**, contando nodos de texto dentro de `main` (separación por espacios, sin etiquetas HTML). Esta es una medición del contenido, no una afirmación de reducción de altura renderizada. Se redujeron además el alto mínimo del hero y los espaciados entre secciones. La altura final debe verificarse en navegador.
-
-### Dos espacios para fotografías reales
-
-- `[data-photo-slot="formacion"]`: **Formación en acción**, instructor guiando un grupo.
-- `[data-photo-slot="comunidad"]`: **Comunidad Academy**, participantes compartiendo una experiencia formativa.
-
-Ambos son `figure` con `figcaption`, reserva de espacio y rótulo «Fotografía real · pendiente». No contienen stock ni personas generadas. Para incorporar una foto aprobada:
-
-1. Guardar el archivo optimizado en `src/media/` (se copia automáticamente a `dist/src/media/`).
-2. Sustituir el `div.photo-placeholder` por un `img` con ruta relativa, dimensiones intrínsecas reales, `loading="lazy"`, `decoding="async"` y un texto alternativo descriptivo. La regla `.photo-slot > img` ya prepara el encuadre.
-3. Quitar el rótulo de pendiente y adaptar el pie al contenido real. Revisar el recorte y el contraste del pie en móvil y escritorio.
-
-Las zonas responsivas compactas preservan los componentes y tokens originales, el menú y su navegación por teclado, las animaciones finitas y `prefers-reduced-motion`. No se agregaron dependencias.
-
-Verificación de esta revisión: `npm run check`, `npm run build`, `node --check src/main.js` y `git diff --check` correctos; estructura de seis secciones y dos slots comprobada en el HTML generado. La vista previa volvió a fallar con `relay could not open browser port 4173`; **desktop y móvil no pudieron revisarse visualmente en navegador**. El control de responsive disponible fue estático, mediante las reglas CSS; no equivale a una prueba visual ni de interacción.
+No se modifica xdaw.cl, DNS ni la configuración de hosting desde esta implementación.
