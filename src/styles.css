@@ -94,8 +94,9 @@
  .home .contact input,.home .contact select,.home .contact textarea{margin-top:5px}
 }
 
-/* Match the lower sections to the shared page container. */
-.home .community,.home .contact{width:var(--wrap);margin-inline:auto}
-/* The section now owns the wrapper: do not apply --wrap a second time inside it. */
-.home .contact>.wrap{width:100%;margin-inline:0}
+/* Community stays boxed; Contact keeps its full-width cyan background. */
+.home .community{width:var(--wrap);margin-inline:auto}
+.home .contact{width:100%;max-width:none;margin-inline:0}
+/* Only the inner grid uses the shared container, exactly once. */
+.home .contact-grid{width:var(--wrap);margin-inline:auto}
 .home .community-copy,.home .contact-grid>*{min-width:0}
