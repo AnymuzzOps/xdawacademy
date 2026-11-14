@@ -73,9 +73,9 @@ Desarrollados para Academy:
 - Hero tipográfico centrado, cian dominante y recurso X abstracto, sin replicar la Home principal.
 - Seis pilares editoriales, separación «Vive / Enseña», camino conceptual y ámbitos profesionales.
 - Arquitectura de convocatorias, estado vacío, rutas propias y formulario honesto sin integración.
-- Composiciones diferentes para móvil: recorrido vertical, pilares en una columna, comunidad editorial y formulario en dos columnas compactas.
+- Composiciones diferentes para móvil: recorrido vertical, pilares compactos en dos columnas, comunidad editorial y formulario en dos columnas compactas.
 
-El identificador tipográfico XDAW Academy es provisional; no se presenta como un archivo oficial de logo. Sustituirlo por el arte aprobado cuando exista. No se han utilizado fotos sintéticas como si fueran registros reales, ni capturas de Instagram. El bloque WE MOVE TOGETHER es una composición tipográfica; el hero dispone de `.hero-art` para sustituir por foto/video auténtico conservando contraste y reduced-motion. Las fotos de formación y del creador están pendientes.
+El identificador tipográfico XDAW Academy es provisional; no se presenta como un archivo oficial de logo. Sustituirlo por el arte aprobado cuando exista. No se han utilizado fotos sintéticas como si fueran registros reales, ni capturas de Instagram. Los dos slots fotográficos son composiciones abstractas identificadas como pendientes; el hero dispone de `.hero-art` para sustituir por foto/video auténtico conservando contraste y reduced-motion. Las fotos de formación y del creador están pendientes.
 
 ## Pendientes editoriales
 
@@ -84,3 +84,31 @@ Validar programa, horas, valores, requisitos y condiciones de certificación; co
 ## Verificación de esta entrega
 
 Pasaron comprobaciones estáticas de navegación y compilación. La infraestructura de preview falló con `relay could not open browser port 4173`; por ello no se verificó visualmente desktop/tablet/móvil ni se completó una auditoría de teclado con navegador. Antes de lanzamiento revisar 360/390/768/1280 px, zoom 200%, tabulación, menú (Escape), validación, copia, reduced-motion y disponibilidad de Google Fonts. No hay éxito de despliegue afirmado sin una ejecución real de Pages.
+
+
+## Compactación de la Home
+
+La Home se organiza en seis zonas: hero; formación; camino del instructor; próximas formaciones; comunidad y origen; contacto. La navegación y sus anclas se conservan (`#academia` ahora está dentro de formación), al igual que las rutas independientes.
+
+- Se agruparon la presentación de Academy y los seis pilares. Se resumió cada pilar sin eliminar ninguno y se mantuvo el enlace a la formación detallada y a las clases de XDAW.
+- El recorrido conserva sus cuatro etapas conceptuales e integra los seis ámbitos profesionales en una franja breve.
+- Comunidad y origen comparten una composición. Se eliminó el bloque tipográfico anterior y la franja decorativa de conceptos repetidos.
+- El CTA final se integró en el encabezado de contacto. Los accesos de conversión dicen «Solicita información»; el botón del formulario sigue diciendo «Preparar consulta» porque no hay envío real.
+- Las convocatorias siguen sin fechas ni ciudades inventadas. El acento cian del bloque y el enlace a contacto le dan mayor protagonismo.
+
+El texto principal pasó de 525 a 367 palabras: **30,1% menos**, contando nodos de texto dentro de `main` (separación por espacios, sin etiquetas HTML). Esta es una medición del contenido, no una afirmación de reducción de altura renderizada. Se redujeron además el alto mínimo del hero y los espaciados entre secciones. La altura final debe verificarse en navegador.
+
+### Dos espacios para fotografías reales
+
+- `[data-photo-slot="formacion"]`: **Formación en acción**, instructor guiando un grupo.
+- `[data-photo-slot="comunidad"]`: **Comunidad Academy**, participantes compartiendo una experiencia formativa.
+
+Ambos son `figure` con `figcaption`, reserva de espacio y rótulo «Fotografía real · pendiente». No contienen stock ni personas generadas. Para incorporar una foto aprobada:
+
+1. Guardar el archivo optimizado en `src/media/` (se copia automáticamente a `dist/src/media/`).
+2. Sustituir el `div.photo-placeholder` por un `img` con ruta relativa, dimensiones intrínsecas reales, `loading="lazy"`, `decoding="async"` y un texto alternativo descriptivo. La regla `.photo-slot > img` ya prepara el encuadre.
+3. Quitar el rótulo de pendiente y adaptar el pie al contenido real. Revisar el recorte y el contraste del pie en móvil y escritorio.
+
+Las zonas responsivas compactas preservan los componentes y tokens originales, el menú y su navegación por teclado, las animaciones finitas y `prefers-reduced-motion`. No se agregaron dependencias.
+
+Verificación de esta revisión: `npm run check`, `npm run build`, `node --check src/main.js` y `git diff --check` correctos; estructura de seis secciones y dos slots comprobada en el HTML generado. La vista previa volvió a fallar con `relay could not open browser port 4173`; **desktop y móvil no pudieron revisarse visualmente en navegador**. El control de responsive disponible fue estático, mediante las reglas CSS; no equivale a una prueba visual ni de interacción.
