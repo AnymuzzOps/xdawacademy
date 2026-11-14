@@ -1,11 +1,5 @@
-document.body.classList.add('js');
-const toggle=document.querySelector('.menu'),nav=document.querySelector('#nav');
-const closeMenu=(focus=false)=>{toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Abrir menú');nav.classList.remove('open');if(focus)toggle.focus();};
-toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Cerrar menú':'Abrir menú');nav.classList.toggle('open',open);});
-nav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true')closeMenu(true);});
-document.addEventListener('click',e=>{if(!e.target.closest('header'))closeMenu();});
-window.matchMedia('(min-width:701px)').addEventListener('change',()=>closeMenu());
+import { initNavigation } from './navigation.js';
+initNavigation();
 const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
 if('IntersectionObserver' in window){
  const targets=document.querySelectorAll('.method-copy,.method-photo,.method-pillars li,.section-heading,.journey-steps li,.formation-panel,.community-photo,.community-copy,.contact-copy');
