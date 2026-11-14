@@ -98,3 +98,18 @@ Cuando el dominio esté confirmado:
 - Añadir canonical, og:url y sitemap con el dominio definitivo cuando esté activo.
 
 No se modifica xdaw.cl, DNS ni la configuración de hosting desde esta implementación.
+
+## Ajuste fino de composición
+
+Esta revisión solo modifica CSS de la Home; conserva HTML, contenidos, arquitectura, colores, familias tipográficas, archivos fotográficos, rutas y funcionamiento del formulario.
+
+- Hero: foco vertical próximo al borde superior (8% desktop, 4% tablet, 0% móvil). El marco móvil es más ancho en proporción, con altura `clamp(240px, 70vw, 310px)` y degradado acoplado a esa altura; reduce el recorte lateral del grupo y mantiene el protagonismo de la instructora.
+- Metodología: marco 4:3 basado en la imagen, sin altura mínima que fuerce un recorte lateral. Se centra respecto al contenido en PC/tablet.
+- Comunidad: foco alto para preservar cabezas. Entre 701 y 1100 px, foto/texto usan proporción 3:2 y la fotografía un marco 3:2 centrado verticalmente; evita estirar la foto hasta la altura del texto y perder rostros laterales. En móvil el marco es 1.4:1.
+- Contacto: padding desktop de 48/45 a 32/32 px; móvil de 31/28 a 22/24 px. Separación móvil entre introducción y formulario de 40 a 22 px; campos de 17 a 11 px. Campos con mínimo de 44 px y padding reducido; fuentes y avisos del formulario conservados. El formulario tiene ancho máximo de 580 px en PC.
+- Ritmo: paddings ajustados a 40–56 px en las secciones superiores de PC y 24–28 px en móvil; margen/padding del origen más contenido.
+- Header sticky: un pequeño espacio superior (12 px en PC, 8 px en móvil) sale de la pantalla al hacer scroll; la barra útil queda en 72/60 px, más su borde. No se modifica la altura durante el scroll, no se añaden listeners ni se recorta el área de los controles. El desplegable móvil se posiciona bajo la altura real del header. Se elimina el margen de ancla redundante de `#academia`.
+
+Comprobaciones: `npm run check`, `npm run build`, `node --check src/main.js` y `git diff --check`. Se revisaron visualmente encuadres aislados de las tres imágenes con cajas estimadas para **1440, 1024, 768, 430 y 375 px**, incluyendo comparativas antes/después del hero. Son simulaciones del recorte `cover`, no capturas de la página ni prueba de layout completo.
+
+La vista previa volvió a fallar con `relay could not open browser port 4173`; el estado fue `Sites preview stopped`. La revisión del formulario, sticky y layout completo en navegador sigue pendiente. Las proporciones reales de las cajas y la ausencia de overflow deben confirmarse en navegador antes del lanzamiento; no se afirma que esa revisión esté completada.
