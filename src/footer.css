@@ -18,8 +18,8 @@
 .universal-footer a:hover { color: var(--footer-accent); }
 .universal-footer a:focus-visible { outline: 2px solid var(--footer-accent); outline-offset: 4px; border-radius: 3px; }
 .universal-footer .uf-top { display: grid; grid-template-columns: 184px minmax(0, 1fr) 190px; align-items: center; gap: 32px; min-height: 120px; padding-block: 24px; }
-.universal-footer .uf-logo { display: flex; justify-content: flex-start; align-items: center; width: 184px; height: 48px; position: relative; overflow: hidden; flex-shrink: 0; }
-.universal-footer .uf-logo .brand-logo-image { position: absolute; width: 160px; height: auto; left: 0; top: 50%; transform: translateY(-51%); object-fit: contain; }
+.universal-footer .uf-logo { display: flex; justify-content: flex-start; align-items: center; width: 184px; height: 60px; position: relative; overflow: hidden; flex-shrink: 0; }
+.universal-footer .uf-logo .brand-logo-image { position: absolute; width: 160px; height: auto; left: 0; top: 50%; transform: translateY(-54%); object-fit: contain; }
 .universal-footer .uf-logo .brand-name { font: 400 28px/1.1 var(--display); letter-spacing: -.02em; }
 .universal-footer .uf-logo .brand-name > span { color: var(--footer-accent); font-size: .76em; margin-left: 4px; }
 .universal-footer .uf-description { color: var(--footer-muted); font-size: 13px; line-height: 1.65; max-width: 360px; }

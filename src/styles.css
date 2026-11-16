@@ -523,3 +523,10 @@ input:hover,select:hover,textarea:hover { border-color:var(--black); }
 .home .contact-grid { width:var(--wrap);margin-inline:auto; }
 .home .community-copy,.home .contact-grid>* { min-width:0; }
 
+
+/* Uploaded Academy logo: preserve its proportions at every header size. */
+.site-header .brand { position:relative;width:160px;height:60px;overflow:hidden; }
+.site-header .brand-logo-image { position:absolute;left:0;top:50%;width:100%;height:auto;max-width:none;transform:translateY(-54%);object-fit:contain; }
+@media(width < 1024px) {
+  .site-header .brand { width:136px;height:52px; }
+}
